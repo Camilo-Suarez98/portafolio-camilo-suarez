@@ -6,12 +6,12 @@ type ProjectsProps = {
 
 export function Projects({ projects }: ProjectsProps) {
   return (
-    <section className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] p-8 shadow-[var(--shadow)]">
+    <section className="rounded-3xl border border-(--border) bg-(--card) p-8 shadow-(--shadow)">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="font-[family-name:var(--font-display)] text-3xl text-white">
+        <h2 className="font-display text-3xl text-white">
           Portafolio de proyectos
         </h2>
-        <span className="text-xs uppercase tracking-[0.26em] text-[color:var(--muted)]">
+        <span className="text-xs uppercase tracking-[0.26em] text-(--muted)">
           Seleccion 2024-2026
         </span>
       </div>
@@ -19,19 +19,19 @@ export function Projects({ projects }: ProjectsProps) {
         {projects.map((project) => (
           <article
             key={project.name}
-            className="flex h-full flex-col justify-between rounded-2xl border border-[color:var(--border)] bg-black/30 p-5"
+            className="flex h-full flex-col justify-between rounded-2xl border border-(--border) bg-black/30 p-5"
           >
             <div>
               <h3 className="text-lg text-white">{project.name}</h3>
-              <p className="mt-3 text-sm text-[color:var(--muted)]">
+              <p className="mt-3 text-sm text-(--muted)">
                 {project.description}
               </p>
             </div>
-            <div className="mt-5 text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
+            <div className="mt-5 text-xs uppercase tracking-[0.2em] text-(--muted)">
               {project.stack}
             </div>
             <a
-              className="mt-4 inline-flex items-center text-sm text-[color:var(--accent-2)]"
+              className="mt-4 inline-flex items-center text-sm text-(--accent-2)"
               href={project.link}
               target="_blank"
               rel="noreferrer"
@@ -43,4 +43,4 @@ export function Projects({ projects }: ProjectsProps) {
       </div>
     </section>
   );
-}
+};
