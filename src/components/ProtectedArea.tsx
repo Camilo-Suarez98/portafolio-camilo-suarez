@@ -66,13 +66,13 @@ export function ProtectedArea({
   };
 
   return (
-    <section className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] p-8 shadow-[var(--shadow)]">
+    <section className="rounded-3xl border border-(--border) bg-(--card) p-8 shadow-(--shadow)">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="font-[family-name:var(--font-display)] text-3xl text-white">
+          <h2 className="font-(--font-display) text-3xl text-white">
             Zona protegida
           </h2>
-          <p className="mt-3 text-[color:var(--muted)]">
+          <p className="mt-3 text-(--muted)">
             Inicia sesion para ver datos de contacto, CV, integraciones y
             documentacion tecnica.
           </p>
@@ -80,11 +80,11 @@ export function ProtectedArea({
         {!accessGranted && (
           <form
             onSubmit={handleLogin}
-            className="flex flex-col gap-3 rounded-2xl border border-[color:var(--border)] bg-black/30 p-4"
+            className="flex flex-col gap-3 rounded-2xl border border-(--border) bg-black/30 p-4"
           >
             <label
               htmlFor="user"
-              className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]"
+              className="text-xs uppercase tracking-[0.2em] text-(--muted)"
             >
               Credenciales demo para enviar por correo
             </label>
@@ -92,7 +92,7 @@ export function ProtectedArea({
               name="user"
               value={user}
               onChange={(event) => setUser(event.target.value)}
-              className="h-11 rounded-xl border border-[color:var(--border)] bg-transparent px-4 text-white placeholder:text-[color:var(--muted)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-2)]"
+              className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
               placeholder="Usuario"
               type="text"
             />
@@ -100,17 +100,17 @@ export function ProtectedArea({
               name="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="h-11 rounded-xl border border-[color:var(--border)] bg-transparent px-4 text-white placeholder:text-[color:var(--muted)] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-2)]"
+              className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
               placeholder="Contrasena"
               type="password"
             />
             <button
               type="submit"
-              className="h-11 rounded-xl bg-[color:var(--accent)] text-sm font-semibold text-black transition hover:brightness-110"
+              className="h-11 rounded-xl bg-(--accent) text-sm font-semibold text-black transition hover:brightness-110"
             >
               Entrar
             </button>
-            <div className="rounded-xl border border-[color:var(--border)] bg-[#10141c] p-3 text-xs text-[color:var(--muted)]">
+            <div className="rounded-xl border border-(--border) bg-[#10141c] p-3 text-xs text-(--muted)">
               Usuario: <span className="text-white">{credentials.user}</span>
               <br />
               Clave: <span className="text-white">{credentials.password}</span>
@@ -120,55 +120,49 @@ export function ProtectedArea({
       </div>
 
       {accessGranted && (
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-2xl border border-[color:var(--border)] bg-black/30 p-6">
+        <div className="mt-10 ">
+          <div className="rounded-2xl border border-(--border) bg-black/30 p-6">
             <h3 className="text-lg text-white">Contacto directo</h3>
-            <p className="mt-4 text-[color:var(--muted)]">
+            <p className="mt-4 text-(--muted)">
               Email: <span className="text-white">{email}</span>
             </p>
-            <p className="mt-2 text-[color:var(--muted)]">
+            <p className="mt-2 text-(--muted)">
               WhatsApp: <span className="text-white">{phone}</span>
             </p>
-            <div className="mt-6 rounded-xl border border-(--border) bg-[#10141c] p-4 text-sm text-[color:var(--muted)]">
-              CV PDF: guarda tu archivo en{" "}
-              <span className="text-white">public/cv.pdf</span> y enlazalo desde
-              aqui.
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[color:var(--border)] bg-black/30 p-6">
-            <h3 className="text-lg text-white">Documentacion API</h3>
-            <p className="mt-4 text-sm text-[color:var(--muted)]">
-              Endpoint interno para repositorios recientes:
+            <p className="mt-2 text-(--muted)">
+              <a href="/cv.pdf" target="_blank" rel="noreferrer">
+                CV: <span className="text-white">Ver CV</span>
+              </a>
             </p>
-            <div className="mt-3 rounded-xl border border-[color:var(--border)] bg-[#10141c] p-4 font-mono text-xs text-[color:var(--muted)]">
-              GET /api/github?user=Camilo-Suarez98
+            <div className="mt-6 rounded-xl border border-(--border) bg-[#10141c] p-4 text-sm text-(--muted)">
+              CV PDF:{" "}
+              <a href="/cv.pdf" target="_blank" rel="noreferrer">
+                <span className="text-white">public/cv.pdf</span> y enlazalo desde
+                aqui.
+              </a>
             </div>
-            <p className="mt-4 text-sm text-[color:var(--muted)]">
-              Responde con nombre, descripcion, lenguaje y estrellas.
-            </p>
           </div>
         </div>
       )}
 
       {accessGranted && (
-        <div className="mt-8 rounded-2xl border border-[color:var(--border)] bg-[#10141c] p-6">
+        <div className="mt-8 rounded-2xl border border-(--border) bg-[#10141c] p-6">
           <div className="grid gap-6">
             <div>
               <h3 className="text-lg text-white">Experiencia y formacion</h3>
-              <p className="mt-4 text-sm text-[color:var(--muted)]">
+              <p className="mt-4 text-sm text-(--muted)">
                 {experienceDetail}
               </p>
             </div>
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
             <h3 className="text-lg text-white">Integracion API: GitHub</h3>
-            <span className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
+            <span className="text-xs uppercase tracking-[0.2em] text-(--muted)">
               Actualizacion automatica
             </span>
           </div>
           {loadingRepos && (
-            <p className="mt-4 text-sm text-[color:var(--muted)]">
+            <p className="mt-4 text-sm text-(--muted)">
               Cargando repositorios...
             </p>
           )}
@@ -178,25 +172,25 @@ export function ProtectedArea({
           {!loadingRepos && !reposError && (
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
               {repos.length === 0 && (
-                <p className="text-sm text-[color:var(--muted)]">
+                <p className="text-sm text-(--muted)">
                   No hay repositorios para mostrar.
                 </p>
               )}
               {repos.map((repo) => (
                 <article
                   key={repo.id}
-                  className="rounded-2xl border border-[color:var(--border)] bg-black/30 p-4"
+                  className="rounded-2xl border border-(--border) bg-black/30 p-4"
                 >
                   <h4 className="text-sm text-white">{repo.name}</h4>
-                  <p className="mt-2 text-xs text-[color:var(--muted)]">
+                  <p className="mt-2 text-xs text-(--muted)">
                     {repo.description ?? "Sin descripcion."}
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-3 text-xs text-[color:var(--muted)]">
+                  <div className="mt-3 flex flex-wrap gap-3 text-xs text-(--muted)">
                     <span>{repo.language ?? "N/D"}</span>
                     <span>★ {repo.stargazers_count}</span>
                   </div>
                   <a
-                    className="mt-3 inline-flex text-xs text-[color:var(--accent-2)]"
+                    className="mt-3 inline-flex text-xs text-(--accent-2)"
                     href={repo.html_url}
                     target="_blank"
                     rel="noreferrer"
@@ -211,4 +205,4 @@ export function ProtectedArea({
       )}
     </section>
   );
-}
+};
