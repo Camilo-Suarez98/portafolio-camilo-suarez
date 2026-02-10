@@ -13,7 +13,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Portafolio | Sitio Personal",
+  title: "Portafolio | Camilo Suárez",
   description:
     "Portafolio personal con zona protegida, integraciones y proyectos.",
 };

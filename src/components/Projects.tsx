@@ -12,7 +12,7 @@ export function Projects({ projects }: ProjectsProps) {
           Portafolio de proyectos
         </h2>
         <span className="text-xs uppercase tracking-[0.26em] text-(--muted)">
-          Seleccion 2024-2026
+          Estos son algunos de mis proyectos
         </span>
       </div>
       <div className="mt-8 grid gap-6 lg:grid-cols-3">

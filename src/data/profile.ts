@@ -16,31 +16,32 @@ export const profile: Profile = {
     "Soy desarrollador frontend con experiencia en la creacion de aplicaciones web modernas y eficientes. Me especializo en React y Next.js, y disfruto construir interfaces intuitivas y optimizadas. He trabajado en proyectos que requieren integraciones con APIs, manejo de datos en tiempo real y soluciones escalables. Mi enfoque se centra en la calidad del codigo, la experiencia del usuario y la entrega de resultados tangibles que aporten valor al negocio.",
   aiTools: [
     "ChatGPT para ideacion y redaccion",
-    "GitHub Copilot para aceleracion de codigo",
-    "Claude para variantes de copy y revisiones",
-    "Figma AI para exploracion visual",
+    "Antigravity con Codex como editor de codigo",
+    "Claude Code para variantes de copy y revisiones",
+    "v0 para exploracion visual",
+    "Freepik para imágenes",
   ],
   projects: [
     {
-      name: "Radar de Oportunidades",
+      name: "Speakify",
       description:
-        "Scraper + clasificador para detectar convocatorias y ordenarlas por relevancia.",
-      stack: "Next.js, Python, SQLite, LangChain",
-      link: "https://tu-proyecto.com",
+        "Proyecto para aprender idiomas utilizando IA como asistente basado en el nivel actual del dominio del usuario y el idioma que desea aprender.",
+      stack: "Next.js, NextAuth, Tailwind, OpenAI API",
+      link: "https://speakify-five.vercel.app/",
     },
     {
-      name: "Briefing Express",
+      name: "AI Resume Viewer",
       description:
-        "Formulario inteligente que genera propuestas y presupuestos en minutos.",
-      stack: "Next.js, Supabase, OpenAI API",
-      link: "https://tu-proyecto.com",
+        "Proyecto para ver y analizar CVs con IA, recibir un puntaje y sugerencias para mejorar.",
+      stack: "Next.js, Tailwind, OpenAI API",
+      link: "https://ai-resume-viewer.vercel.app/",
     },
     {
-      name: "Studio Kits",
-      description: "Biblioteca de componentes y prompts para equipos creativos.",
-      stack: "React, Tailwind, Notion API",
-      link: "https://tu-proyecto.com",
-    },
+      name: "Cine Explorer",
+      description: "Proyecto para buscar películas usando la API de TMDB y con IA recibir sugerencias en base a las películas favoritas del usuario.",
+      stack: "Next.js, NextAuth, Tailwind, TMDB API, OpenAI API",
+      link: "https://cine-explorer.vercel.app/",
+    }
   ],
   demoCredentials: {
     user: "portafolio2026",

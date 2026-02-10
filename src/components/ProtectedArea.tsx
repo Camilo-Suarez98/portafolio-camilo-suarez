@@ -54,6 +54,7 @@ export function ProtectedArea({
     };
     loadRepos();
   }, [accessGranted, github]);
+  console.log('repos', repos);
 
   const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
@@ -134,13 +135,6 @@ export function ProtectedArea({
                 CV: <span className="text-white">Ver CV</span>
               </a>
             </p>
-            <div className="mt-6 rounded-xl border border-(--border) bg-[#10141c] p-4 text-sm text-(--muted)">
-              CV PDF:{" "}
-              <a href="/cv.pdf" target="_blank" rel="noreferrer">
-                <span className="text-white">public/cv.pdf</span> y enlazalo desde
-                aqui.
-              </a>
-            </div>
           </div>
         </div>
       )}
@@ -158,7 +152,7 @@ export function ProtectedArea({
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
             <h3 className="text-lg text-white">Integracion API: GitHub</h3>
             <span className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-              Actualizacion automatica
+              Ultimos proyectos
             </span>
           </div>
           {loadingRepos && (
@@ -182,12 +176,8 @@ export function ProtectedArea({
                   className="rounded-2xl border border-(--border) bg-black/30 p-4"
                 >
                   <h4 className="text-sm text-white">{repo.name}</h4>
-                  <p className="mt-2 text-xs text-(--muted)">
-                    {repo.description ?? "Sin descripcion."}
-                  </p>
                   <div className="mt-3 flex flex-wrap gap-3 text-xs text-(--muted)">
-                    <span>{repo.language ?? "N/D"}</span>
-                    <span>★ {repo.stargazers_count}</span>
+                    <span>Language: {repo.language ?? "N/D"}</span>
                   </div>
                   <a
                     className="mt-3 inline-flex text-xs text-(--accent-2)"
