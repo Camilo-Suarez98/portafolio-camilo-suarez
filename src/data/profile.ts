@@ -11,7 +11,7 @@ export const profile: Profile = {
   about:
     "Desarrollo aplicaciones web con enfoque en la experiencia de usuario y la calidad del codigo.",
   longBio:
-    "Me gusta crear soluciones digitales que sean faciles de usar y que resuelvan problemas reales. He trabajado con equipos pequenos y clientes que necesitan resultados concretos en poco tiempo.",
+    "Me gusta crear soluciones digitales que sean faciles de usar y que resuelvan problemas reales. He trabajado con equipos pequeños y clientes que necesitan resultados concretos en poco tiempo.",
   experienceDetail:
     "Soy desarrollador frontend con experiencia en la creacion de aplicaciones web modernas y eficientes. Me especializo en React y Next.js, y disfruto construir interfaces intuitivas y optimizadas. He trabajado en proyectos que requieren integraciones con APIs, manejo de datos en tiempo real y soluciones escalables. Mi enfoque se centra en la calidad del codigo, la experiencia del usuario y la entrega de resultados tangibles que aporten valor al negocio.",
   experiences: [
@@ -73,7 +73,7 @@ export const profile: Profile = {
     }
   ],
   demoCredentials: {
-    user: "portafolio2026",
-    password: "zona-protegida",
+    user: process.env.USER_CREDENTIALS || "",
+    password: process.env.PASSWORD_CREDENTIALS || "",
   },
 };
