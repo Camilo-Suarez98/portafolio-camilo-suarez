@@ -14,6 +14,35 @@ export const profile: Profile = {
     "Me gusta crear soluciones digitales que sean faciles de usar y que resuelvan problemas reales. He trabajado con equipos pequenos y clientes que necesitan resultados concretos en poco tiempo.",
   experienceDetail:
     "Soy desarrollador frontend con experiencia en la creacion de aplicaciones web modernas y eficientes. Me especializo en React y Next.js, y disfruto construir interfaces intuitivas y optimizadas. He trabajado en proyectos que requieren integraciones con APIs, manejo de datos en tiempo real y soluciones escalables. Mi enfoque se centra en la calidad del codigo, la experiencia del usuario y la entrega de resultados tangibles que aporten valor al negocio.",
+  experiences: [
+    {
+      role: "Desarrollador Frontend",
+      company: "Mocion Experience Tech",
+      period: "Julio 2025 - Diciembre 2025",
+      bullets: [
+        "Desarrollo de plataforma SAAS para creacion de eventos de organizaciones utilizando React, TypeScript y Redux para el frontend y PostgreSQL para la base de datos.",
+        "Colaboracion en el area de Marketing para editar el sitio web de la empresa, aplicando animaciones y correccion de errores.",
+      ],
+    },
+    {
+      role: "Desarrollador Frontend",
+      company: "Freelance",
+      period: "Enero 2023 - Actualidad",
+      bullets: [
+        "He desarrollado sitios web y landing pages para varias empresas con sede en EE.UU. utilizando diferentes tecnologias, mejorando su presencia en linea y mostrando experiencia en tecnologias web y tendencias de diseno.",
+        "Colaboro estrechamente con un desarrollador frontend senior en una importante empresa estadounidense, desempenando un papel clave en la identificacion y resolucion de errores en proyectos web y contribuyendo a la creacion de nuevas interfaces, ampliando la experiencia en desarrollo frontend.",
+      ],
+    },
+    {
+      role: "Desarrollador Frontend",
+      company: "Genco S.A",
+      period: "Julio 2022 - Diciembre 2022",
+      bullets: [
+        "Desarrolle interfaces sensibles y faciles de usar utilizando HTML, CSS, JavaScript y React para mejorar la funcionalidad del sitio web y la experiencia del usuario.",
+        "Creacion de landing pages para campanas de marketing.",
+      ],
+    },
+  ],
   aiTools: [
     "ChatGPT para ideacion y redaccion",
     "Antigravity con Codex como editor de codigo",

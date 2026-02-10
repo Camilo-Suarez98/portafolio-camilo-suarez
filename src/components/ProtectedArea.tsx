@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Repo } from "../lib/types";
+import type { Experience, Repo } from "../lib/types";
+import { Experiences } from "./Experiences";
 
 type ProtectedAreaProps = {
   email: string;
   phone: string;
   experienceDetail: string;
+  experiences: Experience[];
   github: string;
   credentials: {
     user: string;
@@ -18,6 +20,7 @@ export function ProtectedArea({
   email,
   phone,
   experienceDetail,
+  experiences,
   github,
   credentials,
 }: ProtectedAreaProps) {
@@ -54,8 +57,6 @@ export function ProtectedArea({
     };
     loadRepos();
   }, [accessGranted, github]);
-  console.log('repos', repos);
-
   const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     if (
@@ -70,7 +71,7 @@ export function ProtectedArea({
     <section className="rounded-3xl border border-(--border) bg-(--card) p-8 shadow-(--shadow)">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="font-(--font-display) text-3xl text-white">
+          <h2 className="font-display text-3xl text-white">
             Zona protegida
           </h2>
           <p className="mt-3 text-(--muted)">
@@ -149,6 +150,7 @@ export function ProtectedArea({
               </p>
             </div>
           </div>
+          <Experiences experiences={experiences} />
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
             <h3 className="text-lg text-white">Integracion API: GitHub</h3>
             <span className="text-xs uppercase tracking-[0.2em] text-(--muted)">

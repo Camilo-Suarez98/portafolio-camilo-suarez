@@ -27,6 +27,7 @@ export default function Home() {
           email={profile.email}
           phone={profile.phone}
           experienceDetail={profile.experienceDetail}
+          experiences={profile.experiences}
           github={profile.github}
           credentials={profile.demoCredentials}
         />

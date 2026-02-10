@@ -26,10 +26,18 @@ export type Profile = {
   about: string;
   longBio: string;
   experienceDetail: string;
+  experiences: Experience[];
   aiTools: string[];
   projects: Project[];
   demoCredentials: {
     user: string;
     password: string;
   };
+};
+
+export type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  bullets: string[];
 };
