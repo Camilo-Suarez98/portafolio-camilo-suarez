@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Experience, Repo } from "../lib/types";
 import { Experiences } from "./Experiences";
 import { Integrations } from "./Integrations";
+import { LoginForm } from "./LoginForm";
 
 type ProtectedAreaProps = {
   email: string;
@@ -11,10 +12,6 @@ type ProtectedAreaProps = {
   experienceDetail: string;
   experiences: Experience[];
   github: string;
-  credentials: {
-    user: string;
-    password: string;
-  };
 };
 
 export function ProtectedArea({
@@ -23,11 +20,12 @@ export function ProtectedArea({
   experienceDetail,
   experiences,
   github,
-  credentials,
 }: ProtectedAreaProps) {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [accessGranted, setAccessGranted] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const [reposError, setReposError] = useState<string | null>(null);
   const [loadingRepos, setLoadingRepos] = useState(false);
@@ -59,13 +57,29 @@ export function ProtectedArea({
     loadRepos();
   }, [accessGranted, github]);
 
-  const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-    if (
-      user.trim() === credentials.user &&
-      password.trim() === credentials.password
-    ) {
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: user.trim(),
+          password: password.trim(),
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Credenciales invalidas.");
+      }
       setAccessGranted(true);
+    } catch (error) {
+      setLoginError(
+        error instanceof Error ? error.message : "No fue posible iniciar sesion."
+      );
+    } finally {
+      setLoginLoading(false);
     }
   };
 
@@ -82,44 +96,15 @@ export function ProtectedArea({
           </p>
         </div>
         {!accessGranted && (
-          <form
-            onSubmit={handleLogin}
-            className="flex flex-col gap-3 rounded-2xl border border-(--border) bg-black/30 p-4"
-          >
-            <label
-              htmlFor="user"
-              className="text-xs uppercase tracking-[0.2em] text-(--muted)"
-            >
-              Credenciales demo para enviar por correo
-            </label>
-            <input
-              name="user"
-              value={user}
-              onChange={(event) => setUser(event.target.value)}
-              className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-              placeholder="Usuario"
-              type="text"
-            />
-            <input
-              name="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-              placeholder="Contrasena"
-              type="password"
-            />
-            <button
-              type="submit"
-              className="h-11 rounded-xl bg-(--accent) text-sm font-semibold text-black transition hover:brightness-110"
-            >
-              Entrar
-            </button>
-            <div className="rounded-xl border border-(--border) bg-[#10141c] p-3 text-xs text-(--muted)">
-              Usuario: <span className="text-white">{credentials.user}</span>
-              <br />
-              Clave: <span className="text-white">{credentials.password}</span>
-            </div>
-          </form>
+          <LoginForm
+            handleLogin={handleLogin}
+            user={user}
+            password={password}
+            setUser={setUser}
+            setPassword={setPassword}
+            loading={loginLoading}
+            error={loginError}
+          />
         )}
       </div>
 
