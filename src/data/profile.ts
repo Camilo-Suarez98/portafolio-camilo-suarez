@@ -20,8 +20,8 @@ export const profile: Profile = {
       company: "Mocion Experience Tech",
       period: "Julio 2025 - Diciembre 2025",
       bullets: [
-        "Desarrollo de plataforma SAAS para creacion de eventos de organizaciones utilizando React, TypeScript y Redux para el frontend y PostgreSQL para la base de datos.",
-        "Colaboracion en el area de Marketing para editar el sitio web de la empresa, aplicando animaciones y correccion de errores.",
+        "Desarrollo de una aplicación web para la creación de eventos de organizaciones utilizando React, TypeScript y Redux para el frontend y PostgreSQL para la base de datos.",
+        "Colaboración en el área de Marketing para editar el sitio web de la empresa, aplicando animaciones y corrección de errores.",
       ],
     },
     {
