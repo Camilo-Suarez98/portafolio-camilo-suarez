@@ -26,3 +26,20 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true });
 }
+
+export async function GET() {
+  const expectedUser = process.env.USER_CREDENTIAL;
+  const expectedPassword = process.env.PASSWORD_CREDENTIAL;
+
+  if (!expectedUser || !expectedPassword) {
+    return NextResponse.json(
+      { error: "Missing credentials config." },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({
+    user: expectedUser,
+    password: expectedPassword,
+  });
+}

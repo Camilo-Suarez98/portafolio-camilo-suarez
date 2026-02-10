@@ -41,14 +41,34 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const existing = getStoredUser();
-    if (!existing) {
-      saveStoredUser({
-        user: demoCredentials.user,
-        password: demoCredentials.password,
-      });
-    }
-  }, [demoCredentials.password, demoCredentials.user]);
+    let isMounted = true;
+    const seedFromEnv = async () => {
+      const existing = getStoredUser();
+      if (existing) return;
+      try {
+        const response = await fetch("/api/login", { method: "GET" });
+        if (!response.ok) return;
+        const data = (await response.json()) as {
+          user?: string;
+          password?: string;
+        };
+        if (!isMounted) return;
+        if (data.user && data.password) {
+          saveStoredUser({
+            user: data.user,
+            password: data.password,
+          });
+          setUser(data.user);
+        }
+      } catch {
+        throw new Error("No fue posible cargar los datos de usuario.");
+      }
+    };
+    seedFromEnv();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
