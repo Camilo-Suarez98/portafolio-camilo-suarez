@@ -7,11 +7,17 @@ type LoginPayload = {
 
 export async function POST(request: Request) {
   const body = (await request.json()) as LoginPayload;
-  const user = body.user?.trim();
-  const password = body.password?.trim();
+  const normalize = (value?: string) =>
+    value
+      ?.trim()
+      .replace(/^"(.*)"$/, "$1")
+      .replace(/^'(.*)'$/, "$1");
 
-  const expectedUser = process.env.USER_CREDENTIAL;
-  const expectedPassword = process.env.PASSWORD_CREDENTIAL;
+  const user = normalize(body.user);
+  const password = normalize(body.password);
+
+  const expectedUser = normalize(process.env.USER_CREDENTIAL);
+  const expectedPassword = normalize(process.env.PASSWORD_CREDENTIAL);
 
   if (!expectedUser || !expectedPassword) {
     return NextResponse.json(
@@ -28,8 +34,14 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  const expectedUser = process.env.USER_CREDENTIAL;
-  const expectedPassword = process.env.PASSWORD_CREDENTIAL;
+  const normalize = (value?: string) =>
+    value
+      ?.trim()
+      .replace(/^"(.*)"$/, "$1")
+      .replace(/^'(.*)'$/, "$1");
+
+  const expectedUser = normalize(process.env.USER_CREDENTIAL);
+  const expectedPassword = normalize(process.env.PASSWORD_CREDENTIAL);
 
   if (!expectedUser || !expectedPassword) {
     return NextResponse.json(
@@ -38,8 +50,11 @@ export async function GET() {
     );
   }
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     user: expectedUser,
     password: expectedPassword,
   });
+  response.headers.set("Cache-Control", "no-store, max-age=0");
+  return response;
 }
+export const dynamic = "force-dynamic";

@@ -46,8 +46,11 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
       const existing = getStoredUser();
       if (existing) return;
       try {
-        const response = await fetch("/api/login", { method: "GET" });
-        if (!response.ok) return;
+        const response = await fetch("/api/login", {
+          method: "GET",
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Seed failed");
         const data = (await response.json()) as {
           user?: string;
           password?: string;
@@ -59,16 +62,22 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
             password: data.password,
           });
           setUser(data.user);
+          return;
         }
       } catch {
-        throw new Error("No fue posible cargar los datos de usuario.");
+        if (!isMounted) return;
+        saveStoredUser({
+          user: demoCredentials.user,
+          password: demoCredentials.password,
+        });
+        setUser(demoCredentials.user);
       }
     };
     seedFromEnv();
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [demoCredentials.password, demoCredentials.user]);
 
   const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
