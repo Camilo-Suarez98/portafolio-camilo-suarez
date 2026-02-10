@@ -44,7 +44,6 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
     let isMounted = true;
     const seedFromEnv = async () => {
       const existing = getStoredUser();
-      if (existing) return;
       try {
         const response = await fetch("/api/login", {
           method: "GET",
@@ -66,11 +65,13 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
         }
       } catch {
         if (!isMounted) return;
-        saveStoredUser({
-          user: demoCredentials.user,
-          password: demoCredentials.password,
-        });
-        setUser(demoCredentials.user);
+        if (!existing) {
+          saveStoredUser({
+            user: demoCredentials.user,
+            password: demoCredentials.password,
+          });
+          setUser(demoCredentials.user);
+        }
       }
     };
     seedFromEnv();
