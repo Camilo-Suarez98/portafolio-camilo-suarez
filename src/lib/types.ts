@@ -29,7 +29,7 @@ export type Profile = {
   experiences: Experience[];
   aiTools: string[];
   projects: Project[];
-  demoCredentials: {
+  credentials: {
     user: string;
     password: string;
   };
