@@ -6,13 +6,13 @@ type ExperiencesProps = {
 
 export function Experiences({ experiences }: ExperiencesProps) {
   return (
-    <section className="mt-8 rounded-2xl border border-(--border) bg-black/30 p-6">
+    <section className="mt-8 rounded-2xl border border-(--border) bg-(--card) p-6">
       <h3 className="text-lg text-white">Experiencia profesional</h3>
       <div className="mt-6 space-y-6">
         {experiences.map((experience) => (
           <article
             key={`${experience.company}-${experience.period}`}
-            className="rounded-2xl border border-(--border) bg-[#0f141d] p-5"
+            className="rounded-2xl border border-(--border) bg-(--card) p-5"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>

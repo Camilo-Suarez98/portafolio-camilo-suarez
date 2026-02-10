@@ -27,13 +27,13 @@ export function AiTools({ tools, longBio }: AiToolsProps) {
         <p className="mt-5 text-(--muted)">{longBio}</p>
         <div className="mt-6 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full border border-(--border) px-4 py-2">
-            Automatizaciones
+            Aplicaciones Web
           </span>
           <span className="rounded-full border border-(--border) px-4 py-2">
-            Dashboards
+            Landing Pages
           </span>
           <span className="rounded-full border border-(--border) px-4 py-2">
-            Asistentes IA
+            Integraciones con IA
           </span>
         </div>
       </div>

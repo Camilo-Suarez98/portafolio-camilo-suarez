@@ -1,4 +1,4 @@
-import { Repo } from "../lib/types";
+import type { Repo } from "../lib/types";
 
 type IntegrationsProps = {
   loadingRepos: boolean;
