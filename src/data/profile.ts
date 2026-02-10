@@ -48,7 +48,6 @@ export const profile: Profile = {
     "Antigravity con Codex como editor de codigo",
     "Claude Code para variantes de copy y revisiones",
     "v0 para exploracion visual",
-    "Freepik para imágenes",
   ],
   projects: [
     {
