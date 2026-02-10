@@ -29,7 +29,6 @@ export default function Home() {
           experienceDetail={profile.experienceDetail}
           experiences={profile.experiences}
           github={profile.github}
-          credentials={profile.demoCredentials}
         />
       </div>
     </div>
