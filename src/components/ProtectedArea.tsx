@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import type { Experience, Repo } from "../lib/types";
+import { AuthPanel } from "./AuthPanel";
 import { Experiences } from "./Experiences";
 import { Integrations } from "./Integrations";
-import { LoginForm } from "./LoginForm";
 
 type ProtectedAreaProps = {
   email: string;
@@ -12,6 +12,10 @@ type ProtectedAreaProps = {
   experienceDetail: string;
   experiences: Experience[];
   github: string;
+  credentials: {
+    user: string;
+    password: string;
+  };
 };
 
 export function ProtectedArea({
@@ -20,15 +24,20 @@ export function ProtectedArea({
   experienceDetail,
   experiences,
   github,
+  credentials,
 }: ProtectedAreaProps) {
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
   const [accessGranted, setAccessGranted] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
-  const [loginError, setLoginError] = useState<string | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const [reposError, setReposError] = useState<string | null>(null);
   const [loadingRepos, setLoadingRepos] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isAuthed = window.localStorage.getItem("portfolio_auth_session");
+    if (isAuthed === "true") {
+      setAccessGranted(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!accessGranted) return;
@@ -57,29 +66,10 @@ export function ProtectedArea({
     loadRepos();
   }, [accessGranted, github]);
 
-  const handleLogin = async (event?: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    setLoginError(null);
-    setLoginLoading(true);
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user: user.trim(),
-          password: password.trim(),
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Credenciales invalidas.");
-      }
-      setAccessGranted(true);
-    } catch (error) {
-      setLoginError(
-        error instanceof Error ? error.message : "No fue posible iniciar sesion."
-      );
-    } finally {
-      setLoginLoading(false);
+  const handleLoginSuccess = () => {
+    setAccessGranted(true);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("portfolio_auth_session", "true");
     }
   };
 
@@ -96,14 +86,9 @@ export function ProtectedArea({
           </p>
         </div>
         {!accessGranted && (
-          <LoginForm
-            handleLogin={handleLogin}
-            user={user}
-            password={password}
-            setUser={setUser}
-            setPassword={setPassword}
-            loading={loginLoading}
-            error={loginError}
+          <AuthPanel
+            onSuccess={handleLoginSuccess}
+            demoCredentials={credentials}
           />
         )}
       </div>

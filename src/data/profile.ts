@@ -71,7 +71,7 @@ export const profile: Profile = {
       link: "https://cine-explorer.vercel.app/",
     }
   ],
-  demoCredentials: {
+  credentials: {
     user: process.env.USER_CREDENTIALS || "",
     password: process.env.PASSWORD_CREDENTIALS || "",
   },
