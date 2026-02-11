@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { LoginForm } from "./LoginForm";
+import { RegisterForm } from "./RegisterForm";
 
 type AuthPanelProps = {
   onSuccess: () => void;
@@ -88,7 +90,7 @@ export function AuthPanel({ onSuccess }: AuthPanelProps) {
         <button
           type="button"
           onClick={() => setMode("login")}
-          className={`rounded-full px-3 py-1 transition ${mode === "login"
+          className={`rounded-full px-3 py-1 transition cursor-pointer ${mode === "login"
             ? "bg-white/10 text-white"
             : "hover:text-white"
             }`}
@@ -98,7 +100,7 @@ export function AuthPanel({ onSuccess }: AuthPanelProps) {
         <button
           type="button"
           onClick={() => setMode("register")}
-          className={`rounded-full px-3 py-1 transition ${mode === "register"
+          className={`rounded-full px-3 py-1 transition cursor-pointer ${mode === "register"
             ? "bg-white/10 text-white"
             : "hover:text-white"
             }`}
@@ -108,67 +110,23 @@ export function AuthPanel({ onSuccess }: AuthPanelProps) {
       </div>
 
       {mode === "login" ? (
-        <form onSubmit={handleLogin} className="flex flex-col gap-3">
-          <label className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-            Accede con email y contrasena
-          </label>
-          <input
-            name="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Email"
-            type="email"
-            autoComplete="email"
-          />
-          <input
-            name="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Contrasena"
-            type="password"
-            autoComplete="current-password"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="h-11 rounded-xl bg-(--accent) text-sm font-semibold text-black transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {loading ? "Verificando..." : "Entrar"}
-          </button>
-        </form>
+        <LoginForm
+          handleLogin={handleLogin}
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          loading={loading}
+        />
       ) : (
-        <form onSubmit={handleRegister} className="flex flex-col gap-3">
-          <label className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-            Crea tu cuenta con email y contrasena
-          </label>
-          <input
-            name="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Email"
-            type="email"
-            autoComplete="email"
-          />
-          <input
-            name="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Contrasena"
-            type="password"
-            autoComplete="new-password"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="h-11 rounded-xl bg-(--accent) text-sm font-semibold text-black transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {loading ? "Guardando..." : "Registrar"}
-          </button>
-        </form>
+        <RegisterForm
+          handleRegister={handleRegister}
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          loading={loading}
+        />
       )}
       {info && <p className="text-xs text-emerald-300">{info}</p>}
       {error && <p className="text-xs text-red-300">{error}</p>}

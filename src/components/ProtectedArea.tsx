@@ -107,7 +107,7 @@ export function ProtectedArea({
           <button
             type="button"
             onClick={handleLogout}
-            className="h-11 rounded-xl border border-(--border) px-4 text-sm font-semibold text-white transition hover:bg-white/10"
+            className="h-11 rounded-xl border border-(--border) cursor-pointer px-4 text-sm font-semibold text-white transition hover:bg-white/10"
           >
             Cerrar sesion
           </button>

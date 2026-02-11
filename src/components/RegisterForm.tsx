@@ -1,7 +1,7 @@
 import type { FormEvent } from "react";
 
-type LoginFormProps = {
-  handleLogin: (event?: FormEvent<HTMLFormElement>) => void;
+type RegisterFormProps = {
+  handleRegister: (event?: FormEvent<HTMLFormElement>) => void;
   email: string;
   password: string;
   setEmail: (value: string) => void;
@@ -9,18 +9,18 @@ type LoginFormProps = {
   loading?: boolean;
 };
 
-export function LoginForm({
-  handleLogin,
+export function RegisterForm({
+  handleRegister,
   email,
   password,
   setEmail,
   setPassword,
   loading,
-}: LoginFormProps) {
+}: RegisterFormProps) {
   return (
-    <form onSubmit={handleLogin} className="flex flex-col gap-3">
+    <form onSubmit={handleRegister} className="flex flex-col gap-3">
       <label className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-        Accede con email y contrasena
+        Crea tu cuenta con email y contrasena
       </label>
       <input
         name="email"
@@ -38,15 +38,15 @@ export function LoginForm({
         className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
         placeholder="Contrasena"
         type="password"
-        autoComplete="current-password"
+        autoComplete="new-password"
       />
       <button
         type="submit"
         disabled={loading}
         className="h-11 rounded-xl cursor-pointer bg-(--accent) text-sm font-semibold text-black transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {loading ? "Verificando..." : "Entrar"}
+        {loading ? "Guardando..." : "Registrar"}
       </button>
     </form>
   );
-};
+}
