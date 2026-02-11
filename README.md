@@ -12,7 +12,7 @@ Este es el repositorio del portafolio personal de Camilo Suárez, una aplicació
   - Información de contacto detallada (Email, Teléfono).
   - Experiencia profesional completa.
   - Integración con la API de GitHub para mostrar repositorios recientes.
-  - Login funcional con validación de credenciales.
+  - Login/registro con Supabase Auth (email y contraseña).
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -20,6 +20,7 @@ Este es el repositorio del portafolio personal de Camilo Suárez, una aplicació
 - **UI Library**: [React 19](https://react.dev/)
 - **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Lenguaje**: TypeScript
+- **Auth**: [Supabase Auth](https://supabase.com/docs/guides/auth)
 - **Iconos**: Lucide React
 - **Fuentes**: Geist (Vercel)
 
@@ -44,11 +45,11 @@ pnpm install
 
 3. **Configurar variables de entorno:**
 
-Crea un archivo `.env.local` en la raíz del proyecto y añade las credenciales para el área protegida:
+Crea un archivo `.env.local` en la raíz del proyecto y añade tus variables de Supabase:
 
 ```env
-USER_CREDENTIALS=tu_usuario
-PASSWORD_CREDENTIALS=tu_contraseña
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
 ```
 
 4. **Correr el servidor de desarrollo:**

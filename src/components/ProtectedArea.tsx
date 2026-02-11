@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Experience, Repo } from "../lib/types";
+import { supabase } from "../lib/supabase";
 import { AuthPanel } from "./AuthPanel";
 import { Experiences } from "./Experiences";
 import { Integrations } from "./Integrations";
@@ -12,10 +13,6 @@ type ProtectedAreaProps = {
   experienceDetail: string;
   experiences: Experience[];
   github: string;
-  credentials: {
-    user: string;
-    password: string;
-  };
 };
 
 export function ProtectedArea({
@@ -24,7 +21,6 @@ export function ProtectedArea({
   experienceDetail,
   experiences,
   github,
-  credentials,
 }: ProtectedAreaProps) {
   const [accessGranted, setAccessGranted] = useState(false);
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -32,12 +28,38 @@ export function ProtectedArea({
   const [loadingRepos, setLoadingRepos] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const isAuthed = window.localStorage.getItem("portfolio_auth_session");
-    if (isAuthed === "true") {
+    if (!supabase) return;
+    let isMounted = true;
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (!isMounted) return;
+      setAccessGranted(Boolean(data.session));
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+      if (!isMounted) return;
+      setAccessGranted(Boolean(session));
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    setAccessGranted(false);
+  };
+
+  const handleLoginSuccess = () => {
+    if (!accessGranted) {
       setAccessGranted(true);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!accessGranted) return;
@@ -66,13 +88,6 @@ export function ProtectedArea({
     loadRepos();
   }, [accessGranted, github]);
 
-  const handleLoginSuccess = () => {
-    setAccessGranted(true);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("portfolio_auth_session", "true");
-    }
-  };
-
   return (
     <section className="rounded-3xl border border-(--border) bg-(--card) p-8 shadow-(--shadow)">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -86,10 +101,16 @@ export function ProtectedArea({
           </p>
         </div>
         {!accessGranted && (
-          <AuthPanel
-            onSuccess={handleLoginSuccess}
-            demoCredentials={credentials}
-          />
+          <AuthPanel onSuccess={handleLoginSuccess} />
+        )}
+        {accessGranted && (
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="h-11 rounded-xl border border-(--border) px-4 text-sm font-semibold text-white transition hover:bg-white/10"
+          >
+            Cerrar sesion
+          </button>
         )}
       </div>
 

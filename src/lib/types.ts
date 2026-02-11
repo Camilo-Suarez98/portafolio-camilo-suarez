@@ -29,10 +29,6 @@ export type Profile = {
   experiences: Experience[];
   aiTools: string[];
   projects: Project[];
-  credentials: {
-    user: string;
-    password: string;
-  };
 };
 
 export type Experience = {

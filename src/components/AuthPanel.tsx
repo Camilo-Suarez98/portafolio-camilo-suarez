@@ -1,119 +1,85 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { supabase } from "../lib/supabase";
 
 type AuthPanelProps = {
   onSuccess: () => void;
-  demoCredentials: {
-    user: string;
-    password: string;
-  };
 };
 
-type StoredUser = {
-  user: string;
-  password: string;
-};
-
-const STORAGE_KEY = "portfolio_auth_user";
-
-const getStoredUser = (): StoredUser | null => {
-  if (typeof window === "undefined") return null;
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw) as StoredUser;
-  } catch {
-    return null;
-  }
-};
-
-const saveStoredUser = (user: StoredUser) => {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-};
-
-export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
+export function AuthPanel({ onSuccess }: AuthPanelProps) {
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let isMounted = true;
-    const seedFromEnv = async () => {
-      const existing = getStoredUser();
-      try {
-        const response = await fetch("/api/login", {
-          method: "GET",
-          cache: "no-store",
-        });
-        if (!response.ok) throw new Error("Seed failed");
-        const data = (await response.json()) as {
-          user?: string;
-          password?: string;
-        };
-        if (!isMounted) return;
-        if (data.user && data.password) {
-          saveStoredUser({
-            user: data.user,
-            password: data.password,
-          });
-          setUser(data.user);
-          return;
-        }
-      } catch {
-        if (!isMounted) return;
-        if (!existing) {
-          saveStoredUser({
-            user: demoCredentials.user,
-            password: demoCredentials.password,
-          });
-          setUser(demoCredentials.user);
-        }
-      }
-    };
-    seedFromEnv();
-    return () => {
-      isMounted = false;
-    };
-  }, [demoCredentials.password, demoCredentials.user]);
-
-  const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     setError(null);
+    setInfo(null);
     setLoading(true);
-    const stored = getStoredUser();
-    if (!stored) {
+    if (!supabase) {
       setLoading(false);
-      setError("No existe un usuario registrado. Crea uno primero.");
+      setError("Falta configurar Supabase en variables de entorno.");
       return;
     }
-    if (stored.user === user.trim() && stored.password === password.trim()) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+    if (!normalizedEmail || !normalizedPassword) {
       setLoading(false);
+      setError("Completa email y contrasena.");
+      return;
+    }
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: normalizedEmail,
+      password: normalizedPassword,
+    });
+    if (loginError) {
+      setLoading(false);
+      setError("Credenciales invalidas.");
+      return;
+    }
+    setLoading(false);
+    onSuccess();
+  };
+
+  const handleRegister = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+    setError(null);
+    setInfo(null);
+    setLoading(true);
+    if (!supabase) {
+      setLoading(false);
+      setError("Falta configurar Supabase en variables de entorno.");
+      return;
+    }
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+    if (!normalizedEmail || !normalizedPassword) {
+      setLoading(false);
+      setError("Completa email y contrasena.");
+      return;
+    }
+    const { data, error: registerError } = await supabase.auth.signUp({
+      email: normalizedEmail,
+      password: normalizedPassword,
+    });
+    if (registerError) {
+      setLoading(false);
+      setError(registerError.message);
+      return;
+    }
+    setLoading(false);
+    if (data.session) {
       onSuccess();
       return;
     }
-    setLoading(false);
-    setError("Credenciales invalidas.");
-  };
-
-  const handleRegister = (event?: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    setError(null);
-    setLoading(true);
-    if (!user.trim() || !password.trim()) {
-      setLoading(false);
-      setError("Completa usuario y contrasena.");
-      return;
-    }
-    saveStoredUser({
-      user: user.trim(),
-      password: password.trim(),
-    });
-    setLoading(false);
-    onSuccess();
+    setInfo(
+      "Usuario creado. Revisa tu correo para confirmar la cuenta y luego inicia sesion."
+    );
+    setMode("login");
   };
 
   return (
@@ -144,15 +110,16 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
       {mode === "login" ? (
         <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <label className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-            Accede con usuario y contrasena
+            Accede con email y contrasena
           </label>
           <input
-            name="user"
-            value={user}
-            onChange={(event) => setUser(event.target.value)}
+            name="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Usuario"
-            type="text"
+            placeholder="Email"
+            type="email"
+            autoComplete="email"
           />
           <input
             name="password"
@@ -161,6 +128,7 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
             className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
             placeholder="Contrasena"
             type="password"
+            autoComplete="current-password"
           />
           <button
             type="submit"
@@ -173,15 +141,16 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
       ) : (
         <form onSubmit={handleRegister} className="flex flex-col gap-3">
           <label className="text-xs uppercase tracking-[0.2em] text-(--muted)">
-            Crea tu usuario
+            Crea tu cuenta con email y contrasena
           </label>
           <input
-            name="user"
-            value={user}
-            onChange={(event) => setUser(event.target.value)}
+            name="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
-            placeholder="Usuario"
-            type="text"
+            placeholder="Email"
+            type="email"
+            autoComplete="email"
           />
           <input
             name="password"
@@ -190,6 +159,7 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
             className="h-11 rounded-xl border border-(--border) bg-transparent px-4 text-white placeholder:text-(--muted) focus:outline-none focus:ring-2 focus:ring-(--accent-2)"
             placeholder="Contrasena"
             type="password"
+            autoComplete="new-password"
           />
           <button
             type="submit"
@@ -200,6 +170,7 @@ export function AuthPanel({ onSuccess, demoCredentials }: AuthPanelProps) {
           </button>
         </form>
       )}
+      {info && <p className="text-xs text-emerald-300">{info}</p>}
       {error && <p className="text-xs text-red-300">{error}</p>}
     </div>
   );
