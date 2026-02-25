@@ -69,7 +69,7 @@ export function ProtectedArea({
       try {
         const response = await fetch(
           `/api/github?user=${encodeURIComponent(
-            github.split("github.com/")[1] ?? "tu-usuario"
+            github.split("github.com/")[1] ?? "Camilo-Suarez98"
           )}`
         );
         if (!response.ok) {
