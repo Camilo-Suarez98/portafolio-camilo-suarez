@@ -17,6 +17,7 @@ export default function Home() {
           about={profile.about}
           github={profile.github}
           linkedin={profile.linkedin}
+          techStack={profile.techStack}
         />
 
         <AiTools tools={profile.aiTools} longBio={profile.longBio} />

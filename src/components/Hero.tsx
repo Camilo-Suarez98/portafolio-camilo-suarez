@@ -1,3 +1,6 @@
+import { NavLink } from "./ui/NavLink";
+import { SocialLink } from "./ui/SocialLink";
+
 type HeroProps = {
   name: string;
   city: string;
@@ -22,22 +25,8 @@ export function Hero({
       <nav className="flex flex-wrap items-center justify-between gap-6 text-sm uppercase tracking-[0.28em] text-(--muted)">
         <span>Portafolio 2026</span>
         <div className="flex gap-4">
-          <a
-            className="transition hover:text-white"
-            href={github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-          <a
-            className="transition hover:text-white"
-            href={linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
+          <NavLink link={github} name="GitHub" />
+          <NavLink link={linkedin} name="LinkedIn" />
         </div>
       </nav>
 
@@ -66,28 +55,8 @@ export function Hero({
             Perfil publico
           </h2>
           <div className="mt-6 space-y-3 text-sm text-(--muted)">
-            <p>
-              GitHub:{" "}
-              <a
-                className="text-white underline decoration-(--accent-2) decoration-2 underline-offset-4"
-                href={github}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {github}
-              </a>
-            </p>
-            <p>
-              LinkedIn:{" "}
-              <a
-                className="text-white underline decoration-(--accent-2) decoration-2 underline-offset-4"
-                href={linkedin}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {linkedin}
-              </a>
-            </p>
+            <SocialLink link={github} name="GitHub" />
+            <SocialLink link={linkedin} name="LinkedIn" />
           </div>
         </div>
       </div>

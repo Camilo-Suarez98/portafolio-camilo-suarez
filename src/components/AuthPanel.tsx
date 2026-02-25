@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
+import { Button } from "./ui/Button";
 
 type AuthPanelProps = {
   onSuccess: () => void;
@@ -87,26 +88,20 @@ export function AuthPanel({ onSuccess }: AuthPanelProps) {
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-(--border) bg-black/30 p-4">
       <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-(--muted)">
-        <button
-          type="button"
-          onClick={() => setMode("login")}
-          className={`rounded-full px-3 py-1 transition cursor-pointer ${mode === "login"
-            ? "bg-white/10 text-white"
-            : "hover:text-white"
-            }`}
+        <Button
+          currentMode={mode}
+          value="login"
+          setMode={setMode}
         >
           Login
-        </button>
-        <button
-          type="button"
-          onClick={() => setMode("register")}
-          className={`rounded-full px-3 py-1 transition cursor-pointer ${mode === "register"
-            ? "bg-white/10 text-white"
-            : "hover:text-white"
-            }`}
+        </Button>
+        <Button
+          currentMode={mode}
+          value="register"
+          setMode={setMode}
         >
           Registro
-        </button>
+        </Button>
       </div>
 
       {mode === "login" ? (

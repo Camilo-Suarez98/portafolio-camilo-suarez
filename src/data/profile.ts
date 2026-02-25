@@ -14,6 +14,13 @@ export const profile: Profile = {
     "Me gusta crear soluciones digitales que sean faciles de usar y que resuelvan problemas reales. He trabajado con equipos pequeños y clientes que necesitan resultados concretos en poco tiempo.",
   experienceDetail:
     "Soy desarrollador frontend con experiencia en la creacion de aplicaciones web modernas y eficientes. Me especializo en React y Next.js, y disfruto construir interfaces intuitivas y optimizadas. He trabajado en proyectos que requieren integraciones con APIs, manejo de datos en tiempo real y soluciones escalables. Mi enfoque se centra en la calidad del codigo, la experiencia del usuario y la entrega de resultados tangibles que aporten valor al negocio.",
+  techStack: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind",
+    "WordPress"
+  ],
   experiences: [
     {
       role: "Desarrollador Frontend",

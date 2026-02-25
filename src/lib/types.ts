@@ -26,6 +26,7 @@ export type Profile = {
   about: string;
   longBio: string;
   experienceDetail: string;
+  techStack: string[];
   experiences: Experience[];
   aiTools: string[];
   projects: Project[];
