@@ -5,6 +5,7 @@ type HeroProps = {
   about: string;
   github: string;
   linkedin: string;
+  techStack: string[];
 };
 
 export function Hero({
@@ -14,6 +15,7 @@ export function Hero({
   about,
   github,
   linkedin,
+  techStack,
 }: HeroProps) {
   return (
     <header className="flex flex-col gap-8">
@@ -52,21 +54,11 @@ export function Hero({
             <span className="rounded-full border border-(--border) px-4 py-2">
               {role}
             </span>
-            <span className="rounded-full border border-(--border) px-4 py-2">
-              React
-            </span>
-            <span className="rounded-full border border-(--border) px-4 py-2">
-              Next.js
-            </span>
-            <span className="rounded-full border border-(--border) px-4 py-2">
-              TypeScript
-            </span>
-            <span className="rounded-full border border-(--border) px-4 py-2">
-              Tailwind CSS
-            </span>
-            <span className="rounded-full border border-(--border) px-4 py-2">
-              Wordpress
-            </span>
+            {techStack.map((tech) => (
+              <span key={tech} className="rounded-full border border-(--border) px-4 py-2">
+                {tech}
+              </span>
+            ))}
           </div>
         </div>
         <div className="rounded-3xl border border-(--border) bg-(--card) p-6 shadow-(--shadow)">
