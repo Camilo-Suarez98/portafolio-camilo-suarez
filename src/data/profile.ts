@@ -7,7 +7,6 @@ export const profile: Profile = {
   github: "https://github.com/Camilo-Suarez98",
   linkedin: "https://www.linkedin.com/in/camilosc98/",
   email: "camilo.suarez85@gmail.com",
-  phone: "+57 320 318 9088",
   about:
     "Desarrollo aplicaciones web con enfoque en la experiencia de usuario y la calidad del codigo.",
   longBio:

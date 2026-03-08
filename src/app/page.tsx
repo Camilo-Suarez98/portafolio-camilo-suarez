@@ -26,7 +26,6 @@ export default function Home() {
 
         <ProtectedArea
           email={profile.email}
-          phone={profile.phone}
           experienceDetail={profile.experienceDetail}
           experiences={profile.experiences}
           github={profile.github}

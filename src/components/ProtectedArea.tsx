@@ -7,7 +7,6 @@ import { Integrations } from "./Integrations";
 
 type ProtectedAreaProps = {
   email: string;
-  phone: string;
   experienceDetail: string;
   experiences: Experience[];
   github: string;
@@ -15,7 +14,6 @@ type ProtectedAreaProps = {
 
 export function ProtectedArea({
   email,
-  phone,
   experienceDetail,
   experiences,
   github,
@@ -68,9 +66,6 @@ export function ProtectedArea({
           <h3 className="text-lg text-white">Contacto directo</h3>
           <p className="mt-4 text-(--muted)">
             Email: <span className="text-white">{email}</span>
-          </p>
-          <p className="mt-2 text-(--muted)">
-            WhatsApp: <span className="text-white">{phone}</span>
           </p>
           <p className="mt-2 text-(--muted)">
             <a href="/cv.pdf" target="_blank" rel="noreferrer">

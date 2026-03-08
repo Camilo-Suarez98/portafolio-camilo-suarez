@@ -22,7 +22,6 @@ export type Profile = {
   github: string;
   linkedin: string;
   email: string;
-  phone: string;
   about: string;
   longBio: string;
   experienceDetail: string;
