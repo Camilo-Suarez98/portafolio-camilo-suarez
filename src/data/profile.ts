@@ -18,7 +18,9 @@ export const profile: Profile = {
     "Next.js",
     "TypeScript",
     "Tailwind",
-    "WordPress"
+    "WordPress",
+    "Swift",
+    "SwiftUI"
   ],
   experiences: [
     {
